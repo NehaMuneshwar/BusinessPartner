@@ -1,0 +1,36 @@
+{
+    "welcomeFile": "/index.html",
+    "authenticationMethod": "route",
+    "logout": {
+        "logoutEndpoint": "/do/logout"
+    },
+    "routes": [
+        {
+            "source": "^/bpmworkflowruntime/(.*)$",
+            "target": "/$1",
+            "service": "com.sap.spa.processautomation",
+            "endpoint": "api",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/bpmrulesruntime/(.*)$",
+            "target": "/$1",
+            "service": "com.sap.spa.processautomation",
+            "endpoint": "api",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/S4HANA_Dest/(.*)$",
+            "target": "/$1",
+            "destination": "S4OP",
+            "authenticationType": "xsuaa",
+            "cacheControl": "no-cache, no-store, must-revalidate"
+        },
+        {
+            "source": "^(.*)$",
+            "target": "$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        }
+    ]
+}

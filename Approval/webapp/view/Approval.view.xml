@@ -1,0 +1,253 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"  xmlns:f="sap.ui.layout.form" 
+            xmlns:uxap="sap.uxap" controllerName="com.sap.bpm.Approval.controller.Approval" displayBlock="true">
+	<App id="app">
+		<pages>
+			<Page title="{i18n>appTitle}" showHeader="false">
+				<content>	
+                    <uxap:ObjectPageLayout upperCaseAnchorBar="false">
+                    <uxap:headerTitle>
+						<uxap:ObjectPageHeader id="approvalPageHeader"></uxap:ObjectPageHeader>
+					</uxap:headerTitle>
+					<uxap:sections>
+                        <!-- Requester -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>REQUESTER}" titleLevel="H6" showTitle="true">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                            labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                            singleContainerFullSize="true">
+                                            <f:content>
+                                                <Label text="{i18n>REQUEST_ID}"/>
+                                                <Input value="{/RequestId}" editable="false"/>
+                                                <Label text="{i18n>FIRST_NAME}"/>
+                                                <Input value="{/RequesterDetails/RequesterFirstName}" editable="false"/>
+                                                <Label text="{i18n>LAST_NAME}"/>
+                                                <Input value="{/RequesterDetails/RequesterLastName}" editable="false"/>
+                                                <Label text="{i18n>EMAIL_ADDRESS}"/>
+                                                <Input value="{/RequesterDetails/RequesterEmail}" editable="false"/>
+                                                <Label text="{i18n>USER_ID}"/>
+                                                <Input value="{/RequesterDetails/RequesterUserId}" editable="false"/>
+                                                <Label text="{i18n>COMMENT_FROM_REQUESTER}"/>
+                                                <TextArea rows="5" value="{/RequesterDetails/RequesterComment}" editable="false"/>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Basic Data -->
+						<uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>BASIC_DATA}" titleLevel="H6">
+							<uxap:subSections>
+								<uxap:ObjectPageSubSection >
+									<uxap:blocks>
+										<f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+											singleContainerFullSize="false">
+											<f:content>
+                                                <Label text="{i18n>BUSINESS_PARTNER_CATEGORY}"/>
+                                                <Input value="{path: '/BPRequest/BusinessPartnerCategory', formatter: '.formatter.BPCategoryText'}" 
+                                                    editable="false"/>
+                                                <!-- If Organization -->
+                                                <Label text="{i18n>BUSINESS_PARTNER_NAME}" visible="{/isOrganization}"/>
+                                                <Input value="{/BPRequest/BusinessPartnerName}" editable="false" visible="{/isOrganization}"/>
+                                                <!-- If Person -->
+                                                <Label text="{i18n>BUSINESS_PARTNER_FIRST_NAME}" visible="{/isPerson}"/>
+                                                <Input value="{/BPRequest/FirstName}" editable="false" visible="{/isPerson}"/>
+                                                <Label text="{i18n>BUSINESS_PARTNER_LAST_NAME}" visible="{/isPerson}"/>
+                                                <Input value="{/BPRequest/LastName}" editable="false" visible="{/isPerson}"/>
+											</f:content>
+										</f:SimpleForm>
+									</uxap:blocks>
+								</uxap:ObjectPageSubSection>
+							</uxap:subSections>
+						</uxap:ObjectPageSection>
+                         <!-- Roles -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>ROLES}" titleLevel="H6" showTitle="true">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <Table inset="false" 
+                                            items="{
+                                                path: '/BPRequest/RolesData'
+                                                }">
+                                            <columns>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label text="{i18n>BUSINESS_PARTNER_ROLE}"/>
+                                                </Column>
+                                                <Column demandPopin="true">
+                                                    <Label text="{i18n>ROLE_DESCRIPTION}"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Input value ="{BusinessPartnerRole}" editable="false"/>
+                                                        <Text text="{BusinessPartnerRoleShortName}"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Standard Address Data -->
+						<uxap:ObjectPageSection titleUppercase="false" title="{i18n>STANDARD_ADDRESS_DATA}" titleLevel="H6" showTitle="true">
+							<uxap:subSections>
+								<uxap:ObjectPageSubSection>
+									<uxap:blocks>
+										<f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+											singleContainerFullSize="true">
+											<f:content>
+                                                <Label text="{i18n>STREET}"/>
+                                                <Input value="{/BPRequest/AddressData/StreetName}" editable="false"/>
+                                                <Label text="{i18n>HOUSE_NUMBER}"/> 
+                                                <Input value="{/BPRequest/AddressData/HouseNumber}" editable="false"/>
+                                                <Label text="{i18n>POSTAL_CODE}"/>
+                                                <Input value="{/BPRequest/AddressData/PostalCode}" editable="false"/>
+                                                <Label text="{i18n>CITY}"/>
+                                                <Input value="{/BPRequest/AddressData/CityName}" editable="false"/>  
+                                                <Label text="{i18n>COUNTRY}"/>
+                                                <Input value ="{/BPRequest/AddressData/Country}" editable="false"/>                                             
+											</f:content>
+										</f:SimpleForm>
+									</uxap:blocks>
+								</uxap:ObjectPageSubSection>
+							</uxap:subSections>
+						</uxap:ObjectPageSection>
+                        <!-- Bank Data -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>BANK_ACCOUNTS}" titleLevel="H6" showTitle="true" visible="{/isEnrichFinanceStep}">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <Table inset="false" 
+                                            items="{
+                                                path: '/BPRequest/FinanceData/BankData'
+                                                }">
+                                            <columns>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label text="{i18n>BANK_KEY}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label text="{i18n>BANK_NAME}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label text="{i18n>BANK_COUNTRY}"/>
+                                                </Column>
+                                                <Column demandPopin="true">
+                                                    <Label text="{i18n>ACCOUNT_NUMBER}"/>
+                                                </Column>
+                                                <Column demandPopin="true">
+                                                    <Label text="{i18n>ACCOUNT_NAME}"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Input value ="{BankNumber}" editable="false"/>
+                                                        <Text text="{BankName}"/>
+                                                        <Text text="{BankCountryKey}"/>
+                                                        <Input value="{BankAccount}" editable="false"/>
+                                                        <Input value="{BankAccountName}" editable="false"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Tax Data -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>TAX_NUMBERS}" titleLevel="H6" showTitle="true" visible="{/isEnrichFinanceStep}">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <Table inset="false" 
+                                            items="{
+                                                path: '/BPRequest/FinanceData/TaxData'
+                                                }">
+                                            <columns>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label text="{i18n>TAX_CATEGORY}"/>
+                                                </Column>
+                                                <Column demandPopin="true">
+                                                    <Label text="{i18n>TAX_NUMBER}"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem>
+                                                    <cells>
+                                                        <Input value ="{TaxCategory}" editable="false"/>
+                                                        <Input value="{TaxNumber}" editable="false"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Comments -->
+						<uxap:ObjectPageSection titleUppercase="false" title="{i18n>COMMENTS}" titleLevel="H6" showTitle="true">
+							<uxap:subSections>
+								<uxap:ObjectPageSubSection>
+									<uxap:blocks>
+										<f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+											singleContainerFullSize="true">
+											<f:content>
+												<Label text="{i18n>COMMENTS}"/>
+                                                <TextArea rows="10" value="{/comments}" editable="true"/>
+											</f:content>
+										</f:SimpleForm>
+									</uxap:blocks>
+								</uxap:ObjectPageSubSection>
+							</uxap:subSections>
+						</uxap:ObjectPageSection>
+                        <!-- History -->
+						<uxap:ObjectPageSection titleUppercase="false" title="{i18n>HISTORY}" titleLevel="H6" showTitle="true">
+							<uxap:subSections>
+								<uxap:ObjectPageSubSection>
+									<uxap:blocks>
+                                        <Table inset="false" 
+                                        items="{
+			                                path: '/History'
+		                                    }">
+		                                    <columns>
+			                                    <Column>
+				                                    <Text text="{i18n>USER}" />
+			                                    </Column>
+                                                <Column>
+				                                    <Text text="{i18n>STEP_NAME}" />
+			                                    </Column>
+                                                <Column>
+				                                    <Text text="{i18n>STATUS}" />
+			                                    </Column>
+                                                <Column>
+				                                    <Text text="{i18n>COMMENT}" />
+			                                    </Column>
+		                                    </columns>
+		                                    <items>
+			                                    <ColumnListItem>
+				                                    <cells>
+					                                    <Text text="{Id}" />
+                                                        <Text text="{StepName}" />
+                                                        <Text text="{Status}" />
+                                                        <Text text="{Comments}" />
+				                                    </cells>
+			                                    </ColumnListItem>
+		                                    </items>
+	                                    </Table>
+									</uxap:blocks>
+								</uxap:ObjectPageSubSection>
+							</uxap:subSections>
+						</uxap:ObjectPageSection>
+					</uxap:sections>
+				</uxap:ObjectPageLayout>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

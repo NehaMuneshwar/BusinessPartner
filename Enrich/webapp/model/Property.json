@@ -1,0 +1,88 @@
+{
+    "BPCategory": [
+        {
+            "key": "1",
+            "text": "PERSON"
+        },
+        {
+            "key": "2",
+            "text": "ORGANIZATION"
+        }
+    ],
+    "PersonTitles": [
+        {
+            "key": "2",
+            "text": "MR"
+        },
+        {
+            "key": "1",
+            "text": "MS"
+        }
+    ],
+    "BPRolesVH": [],
+    "BPRolesValueHelpType": {
+        "cols": [
+            {
+                "label": "BUSINESS_PARTNER_ROLE",
+                "template": "BusinessPartnerRole"
+            },
+            {
+                "label": "ROLE_DESCRIPTION",
+                "template": "BusinessPartnerRoleShortName"
+            }
+        ]
+    },
+    "CountriesVH": [],
+    "CountryValueHelpType": {
+        "cols": [
+            {
+                "label": "COUNTRY_KEY",
+                "template": "Country"
+            },
+            {
+                "label": "COUNTRY_NAME",
+                "template": "CountryName"
+            }
+        ]
+    },
+    "TaxVH": [],
+    "TaxCategoryValueHelpType": {
+        "cols": [
+            {
+                "label": "TAX_NUMBER_CATEGORY",
+                "template": "TaxCategory"
+            },
+            {
+                "label": "TAX_CATEGORY_DESCRIPTION",
+                "template": "TaxCategoryDescription"
+            }
+        ]
+    },
+    "BankAccountsVH": [],
+    "BankValueHelpType": {
+        "cols": [
+            {
+                "label": "BANK_KEY",
+                "template": "BankNumber"
+            },
+            {
+                "label": "BANK_COUNTRY",
+                "template": "BankCountryKey"
+            },
+            {
+                "label": "BANK_NAME",
+                "template": "BankName"
+            }
+        ]
+    },
+    "sLangCode": "",
+    "sDefaultLang": "EN",
+    "sDefaultLangName": "English",
+    "usingDefaultLang": false,
+    "oDialog": {
+        "sFilterLabel": "",
+        "sDialogDes": "",
+        "sDialogKey": "",
+        "sTitle": ""
+    }
+}

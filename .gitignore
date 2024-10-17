@@ -1,0 +1,8 @@
+/mta_archives/
+/node_modules/
+/resources/
+/dist/
+.DS_STORE
+*-content.zip*
+.vscode
+*.env*

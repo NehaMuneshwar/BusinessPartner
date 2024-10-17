@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns="sap.ui.comp.valuehelpdialog" class="sapUiSizeCompact" xmlns:m="sap.m" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:core="sap.ui.core">
+	<ValueHelpDialog title="{mCommon>/oDialog/sTitle}" ok=".onValueHelpOkPress" cancel=".onValueHelpCancelPress" afterClose=".onValueHelpAfterClose"
+		supportMultiselect="false" key="{mCommon>/oDialog/sDialogKey}" descriptionKey="{mCommon>/oDialog/sDialogDes}" afterOpen=".onValueHelpAfterOpen">
+	</ValueHelpDialog>
+</core:FragmentDefinition>

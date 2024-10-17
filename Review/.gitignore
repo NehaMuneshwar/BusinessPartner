@@ -1,0 +1,7 @@
+/node_modules/
+/dist/
+/.vscode/
+/*-content.zip/ 
+/coverage/
+# auto generated wildcard
+CreateRequest/.env

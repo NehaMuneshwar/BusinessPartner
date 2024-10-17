@@ -1,0 +1,80 @@
+{
+    "RequesterDetails": {
+        "RequesterFirstName": "",
+        "RequesterLastName": "",
+        "RequesterEmail": "",
+        "RequesterUserId": ""
+    },
+    "BPRequest": {
+        "BusinessPartnerName": "",
+        "BusinessPartnerFullName": "",
+        "BusinessPartnerGrouping": "",
+        "BusinessPartnerCategory": "",
+        "OrganizationBPName1": "",
+        "SearchTerm1": "",
+        "GenderCodeName": "",
+        "LastName": "",
+        "FirstName": "",
+        "AddressData": {
+            "Country": "",
+            "StreetName": "",
+            "PostalCode": "",
+            "CityName": "",
+            "HouseNumber": ""
+        },
+        "FinanceData": {
+            "BankData": [],
+            "TaxData": []
+        }
+    },
+    "isOrganization": false,
+    "isPerson": false,
+    "BPCategory": [
+        {
+            "key": "1",
+            "text": "PERSON"
+        },
+        {
+            "key": "2",
+            "text": "ORGANIZATION"
+        }
+    ],
+    "PersonTitles": [
+        {
+            "key": "2",
+            "text": "MR"
+        },
+        {
+            "key": "1",
+            "text": "MS"
+        }
+    ],
+    "oEnable": {
+        "bRegister": true,
+        "sInput": true
+    },
+    "BPRoles": [],
+    "BPRolesVH": [],
+    "BPRolesValueHelpType": {
+        "cols": [
+            {
+                "label": "BUSINESS_PARTNER_ROLE",
+                "template": "BusinessPartnerRole"
+            },
+            {
+                "label": "ROLE_DESCRIPTION",
+                "template": "BusinessPartnerRoleShortName"
+            }
+        ]
+    },
+    "sLangCode": "",
+    "sDefaultLang": "EN",
+    "sDefaultLangName": "English",
+    "usingDefaultLang": false,
+    "oDialog": {
+        "sFilterLabel": "",
+        "sDialogDes": "",
+        "sDialogKey": "",
+        "sTitle": ""
+    }
+}

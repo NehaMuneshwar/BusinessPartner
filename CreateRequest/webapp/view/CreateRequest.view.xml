@@ -1,0 +1,136 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+            xmlns:l="sap.ui.layout" xmlns:uxap="sap.uxap" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+            controllerName="com.sap.bpm.CreateRequest.controller.CreateRequest" displayBlock="true">
+	<App>
+		<pages>
+			<Page title="{i18n>title}" showSubHeader="false" showHeader="false" showFooter="true">
+				<content>
+                    <uxap:ObjectPageLayout upperCaseAnchorBar="false">
+                        <uxap:headerTitle>
+                            <uxap:ObjectPageHeader objectTitle="{i18n>BUSINESS_PARTNER_CREATION_REQUEST}"></uxap:ObjectPageHeader>
+                        </uxap:headerTitle>
+                        <uxap:sections>
+                            <!-- Requester -->
+                            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>REQUESTER}" titleLevel="H6" showTitle="true">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                singleContainerFullSize="true">
+                                                <f:content>
+                                                    <Label text="{i18n>REQUEST_ID}" required="true"/>
+												    <Input value="{/RequestId}" editable="false" enabled="{/oEnable/sInput}"/>
+                                                    <Label text="{i18n>FIRST_NAME}" required="true"/>
+                                                    <Input value="{/RequesterDetails/RequesterFirstName}" valueState="{/RequesterDetails/RequesterFirstNameState}"
+                                                        valueStateText="{/RequesterDetails/RequesterFirstNameStateText}" change="onChange" enabled="{/oEnable/sInput}"/>
+                                                    <Label text="{i18n>LAST_NAME}" required="true"/>
+                                                    <Input value="{/RequesterDetails/RequesterLastName}" valueState="{/RequesterDetails/RequesterLastNameState}"
+                                                        valueStateText="{/RequesterDetails/RequesterLastNameStateText}" change="onChange" enabled="{/oEnable/sInput}"/>
+                                                    <Label text="{i18n>EMAIL_ADDRESS}" required="true"/>
+                                                    <Input value="{/RequesterDetails/RequesterEmail}" placeholder="username@example.com" valueState="{/RequesterDetails/RequesterEmailState}"
+                                                        valueStateText="{/RequesterDetails/RequesterEmailStateText}" type="Email" change="onChange" enabled="{/oEnable/sInput}"/>
+                                                    <Label text="{i18n>USER_ID}" required="true"/>
+                                                    <Input value="{/RequesterDetails/RequesterUserId}" placeholder="P000123" valueState="{/RequesterDetails/RequesterUserIdState}"
+                                                        valueStateText="{/RequesterDetails/RequesterUserIdStateText}" change="onChange" enabled="{/oEnable/sInput}"/>
+                                                    <Label text="{i18n>COMMENT_FROM_REQUESTER}" required="false"/>
+                                                    <TextArea  rows="5" value="{/RequesterDetails/RequesterComment}" enabled="{/oEnable/sInput}"/>
+                                                </f:content>
+                                            </f:SimpleForm>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <!-- Basic Data -->
+                            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>BASIC_DATA}" titleLevel="H6" showTitle="true">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                singleContainerFullSize="true">
+                                                <f:content>
+                                                    <Label text="{i18n>BUSINESS_PARTNER_CATEGORY}" required="true"/>
+                                                    <Select items="{path: '/BPCategory'}" forceSelection="false" valueState="{/BPRequest/BusinessPartnerCategoryState}" 
+                                                        valueStateText="{/BPRequest/BusinessPartnerCategoryStateText}" 
+                                                        change="onBPCategoryChange" enabled="{/oEnable/sInput}">
+                                                            <core:Item key="{key}" text="{ path : 'text', formatter : '.getMessage' }" />
+                                                    </Select>
+                                                    <!-- If Organization -->
+                                                    <Label text="{i18n>BUSINESS_PARTNER_NAME}" required="true" visible="{/isOrganization}"/>
+                                                    <Input value="{/BPRequest/BusinessPartnerName}" valueState="{/BPRequest/BusinessPartnerNameState}"
+                                                        valueStateText="{/BPRequest/BusinessPartnerNameStateText}" change="onChange" 
+                                                        enabled="{/oEnable/sInput}" visible="{/isOrganization}" maxLength="40"/>
+                                                    <!-- If Person -->
+                                                    <Label text="{i18n>BUSINESS_PARTNER_TITLE}" required="false" visible="{/isPerson}"/>
+                                                    <Select items="{path: '/PersonTitles'}" change="onPersonTitleChange" forceSelection="false" 
+                                                        enabled="{/oEnable/sInput}" visible="{/isPerson}">
+                                                        <core:Item key="{key}" text="{ path : 'text', formatter : '.getMessage' }"/>
+                                                    </Select>
+                                                    <Label text="{i18n>BUSINESS_PARTNER_FIRST_NAME}" required="false" visible="{/isPerson}"/>
+                                                    <Input value="{/BPRequest/FirstName}" enabled="{/oEnable/sInput}" visible="{/isPerson}" maxLength="40"/>
+                                                    <Label text="{i18n>BUSINESS_PARTNER_LAST_NAME}" required="true" visible="{/isPerson}"/>
+                                                    <Input value="{/BPRequest/LastName}" enabled="{/oEnable/sInput}" visible="{/isPerson}" change="onChange"
+                                                        valueState="{/BPRequest/LastNameState}" valueStateText="{/BPRequest/LastNameStateText}" maxLength="40"/>
+                                                </f:content>
+                                            </f:SimpleForm>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <!-- Roles -->
+                            <uxap:ObjectPageSection titleUppercase="false" title="{i18n>ROLES}" titleLevel="H6" showTitle="true">
+                                <uxap:subSections>
+                                    <uxap:ObjectPageSubSection>
+                                        <uxap:blocks>
+                                            <Table inset="false" 
+                                                items="{
+                                                    path: '/BPRoles'
+                                                    }">
+                                                <headerToolbar>
+                                                    <OverflowToolbar>
+                                                        <ToolbarSpacer />
+                                                        <Button icon="sap-icon://add" type="Transparent" 
+                                                            press="onAddBPRole" visible="{/oEnable/sInput}"/>
+                                                    </OverflowToolbar>
+                                                </headerToolbar>
+                                                <columns>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <Label text="{i18n>BUSINESS_PARTNER_ROLE}"/>
+                                                    </Column>
+                                                    <Column demandPopin="true">
+                                                        <Label text="{i18n>ROLE_DESCRIPTION}"/>
+                                                    </Column>
+                                                    <Column hAlign="End">
+                                                        <Text text="" />
+                                                    </Column>
+                                                </columns>
+                                                <items>
+                                                    <ColumnListItem>
+                                                        <cells>
+                                                            <Input showValueHelp="true" valueHelpOnly="true" value ="{BusinessPartnerRole}"
+                                                                valueHelpRequest=".onValueHelpRequested" enabled="{/oEnable/sInput}" valueState="{BusinessPartnerRoleState}"
+                                                                valueStateText="{BusinessPartnerRoleStateText}" app:inputCustomData="BPRoleValueHelpType" change="onChange"/>
+                                                            <Text text="{BusinessPartnerRoleShortName}"/>
+                                                            <Button icon="sap-icon://delete" type="Transparent" press="handleDeleteBPRole" visible="{/oEnable/sInput}"/>
+                                                        </cells>
+                                                    </ColumnListItem>
+                                                </items>
+                                            </Table>
+                                        </uxap:blocks>
+                                    </uxap:ObjectPageSubSection>
+                                </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                        </uxap:sections>
+			        </uxap:ObjectPageLayout>
+				</content>
+                <footer>
+                    <OverflowToolbar>
+                        <ToolbarSpacer/>
+                        <Button text="{i18n>SUBMIT}" press="onPressSubmit" enabled="{/oEnable/sInput}" type="Emphasized" class="sapUiTinyMarginEnd"/>
+                    </OverflowToolbar>
+			</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,44 @@
+general:
+  buildTool: 'mta'
+  productiveBranch: 'ui_onprem'
+  pipelineOptimization: false
+  gitHttpsCredentialsId: 'hyperspace-github-tools-sap-moon-jenkins-serviceuser'
+  vaultAppRoleTokenCredentialsId: 'vault-approle-role-id-1389-8262'
+  vaultAppRoleSecretTokenCredentialsId: 'vault-approle-secret-id-accessor-1389-8262'
+  vaultBasePath: 'piper/PIPELINE-GROUP-1389'
+  vaultPipelineName: 'PIPELINE-8262'
+  vaultServerUrl: 'https://vault.tools.sap'
+  vaultNamespace: 'ies/hyperspace/pipelines'
+  nativeBuild: true
+stages:
+  Confirm:
+    manualConfirmation: false
+  Release:
+    sapDownloadArtifact: false
+    githubPublishRelease: false
+  IPScan and PPMS:
+    sapCheckPPMSCompliance: false
+steps:
+  mtaBuild:
+    mtaBuildTool: cloudMbt
+    mtarGroup: 'com.sap.hyperspace'
+  executeBuild:
+    buildType: stage
+  sapCallStagingService:
+    url: 'https://staging.repositories.cloud.sap/stage/api'
+    profile: 'group-1389-default'
+  whitesourceExecuteScan:
+    stashContent:
+    - buildDescriptor
+    - opensourceConfiguration
+    - classFiles
+    - tests
+    whitesourceProductName: 'SHC - WORKFLOW-CONTENT-1-0'
+#    whitesourceProductToken: '8cfb077b207b467cadf03d4adcbfa4916139b78401a64e62a966ae3de5db9926'
+  checkmarxExecuteScan:
+    projectName: 'BusinessPartnerManagementWorkflow.ui_onprem'
+    teamName: '/CxServer/SP/SAP/PI/CloudPlatform/BPM'
+    preset: '100207' # SAP_Corp_MTA_JavaScript
+  sapCumulusUpload:
+    pipelineId: 'ec55e436-f205-4f5b-8373-02a6ce6b4eac'
+    cumulusFileCredentialsId: 'hyperspace-cumulusupload-1389'

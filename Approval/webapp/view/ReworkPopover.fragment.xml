@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ResponsivePopover title="{i18n>CHOOSE_REWORK_TYPE}" class="sapUiPopupWithPadding" placement="Top">
+        <content>
+            <RadioButtonGroup>
+                <RadioButton text="{i18n>COMPLETE_REWORK}" selected="{/isCompleteRework}" />
+                <RadioButton text="{i18n>REWORK_ADDRESS_DATA_PROVISIONING_STEP}" selected="{/isAddressRework}"/>
+                <RadioButton text="{i18n>REWORK_FINANCE_DATA_PROVISIONING_STEP}" selected="{/isFinanceRework}"/>
+            </RadioButtonGroup>
+        </content>
+		<!-- <footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button	text="{i18n>SEND_TO_REWORK}" type="Emphasized" press="handleSendToReworkPress"/>
+			</OverflowToolbar>
+		</footer> -->
+        <endButton>
+            <Button	text="{i18n>SEND_TO_REWORK}" type="Emphasized" press="handleSendToReworkPress"/>
+        </endButton>
+	</ResponsivePopover>
+</core:FragmentDefinition>

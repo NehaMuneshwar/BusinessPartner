@@ -1,0 +1,141 @@
+_schema-version: "3.2"
+ID: CustomUIForBusinessPartnerManagement
+description: Custom UIs for Business Partner Management Scenario
+version: 1.0.4
+
+# ------------------------------------------------------------
+# ----------------------- MODULES ----------------------------
+modules:
+  - name: BusinessPartnerManagement-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: BusinessPartnerManagement-destination-service
+        parameters:
+          content-target: true
+      - name: BusinessPartnerManagement_html_repo_host
+        parameters:
+          service-key:
+            name: BusinessPartnerManagement_html_repo_host-key
+      - name: uaa_BusinessPartnerManagement
+        parameters:
+          service-key:
+            name: uaa_BusinessPartnerManagement-key
+    parameters:
+      content:
+        subaccount:
+          destinations:
+          - Name: BPManagement_BusinessPartnerManagement_html_repo_host
+            ServiceInstanceName: BPManagement-html5-app-host-service
+            ServiceKeyName: BusinessPartnerManagement_html_repo_host-key
+            sap.cloud.service: BPManagement
+          - Authentication: OAuth2UserTokenExchange
+            Name: BPManagement_uaa_BusinessPartnerManagement
+            ServiceInstanceName: BusinessPartnerManagement-xsuaa-service
+            ServiceKeyName: uaa_BusinessPartnerManagement-key
+            sap.cloud.service: BPManagement
+          existing_destinations_policy: ignore
+    build-parameters:
+      no-source: true
+
+  # --------------------- UI DEPLOYER ---------------------------
+  - name: BusinessPartnerManagement_ui_deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: BusinessPartnerManagement_html_repo_host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - Approval-content.zip
+          name: Approval
+          target-path: resources/
+        - artifacts:
+            - CreateRequest-content.zip
+          name: CreateRequest
+          target-path: resources/
+        - artifacts:
+            - Enrich-content.zip
+          name: Enrich
+          target-path: resources/
+        - artifacts:
+            - Review-content.zip
+          name: Review
+          target-path: resources/
+
+  # ------------------- HTML5 BUSINESS APPS ---------------------
+  - name: Approval
+    type: html5
+    path: Approval
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  - name: CreateRequest
+    type: html5
+    path: CreateRequest
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  - name: Review
+    type: html5
+    path: Review
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+  - name: Enrich
+    type: html5
+    path: Enrich
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build
+      supported-platforms: []
+
+# --------------------------------------------------------------
+# ---------------------- RESOURCES -----------------------------
+resources:
+  # ------------------------------------------------------------
+  - name: BusinessPartnerManagement-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+      service: destination
+      service-name: BusinessPartnerManagement-destination-service
+      service-plan: lite
+  # ------------------------------------------------------------
+  - name: BusinessPartnerManagement_html_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: BPManagement-html5-app-host-service
+      service-plan: app-host
+  # ------------------------------------------------------------
+  - name: uaa_BusinessPartnerManagement
+    parameters:
+      path: ./xs-security.json
+      service-name: BusinessPartnerManagement-xsuaa-service
+      service: xsuaa
+      service-plan: application
+    type: org.cloudfoundry.managed-service
+  # ------------------------------------------------------------
+  - name: BusinessPartnerManagement_html_repo_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
